@@ -24,7 +24,10 @@ function TextInput({
   };
 
   const handleOnblur = (event) => {
-    validate(event);
+    if(validate){
+      validate(event);
+    }
+    
     setFocuseState(false);
   };
 

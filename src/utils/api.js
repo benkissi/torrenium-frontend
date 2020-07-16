@@ -30,3 +30,20 @@ export const signupUser = async (email, password) => {
     
     return data
 }
+
+export const findMatchingJobs = async (username, token) => {
+    const url = `${URLS.MATCHING}`
+    const details = {
+        username
+    }
+    console.log('request',username, token)
+    const res = await fetch(url, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+        body: JSON.stringify(details)
+    })
+
+    const data = res.json()
+
+    return data
+}

@@ -7,5 +7,7 @@ export const FORM_TYPES = {
 }
 
 export const APP_TYPES = {
-    SET_LOGIN: 'SET_LOGIN'
+    SET_LOGIN: 'SET_LOGIN',
+    SET_MATCHING_JOBS: 'SET_MATCHING_JOBS',
+    SET_LOADING_STATE: 'SET_LOADING_STATE'
 }

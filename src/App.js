@@ -4,6 +4,7 @@ import { AppContext } from "./store/store";
 
 import Auth from "./pages/auth/Auth";
 import DashboardRoutes from "./layouts/dashboard/DashboardRoutes";
+import MatchingJobs from './pages/match/Match'
 
 import { appReducer } from "./store/reducers";
 
@@ -13,6 +14,8 @@ function App() {
   const STORE = {
     user: null,
     loggedIn: false,
+    matchingJobs: null,
+    loading: false
   };
   const [store, dispatchStore] = useReducer(appReducer, STORE);
   return (
@@ -24,7 +27,7 @@ function App() {
             <Route exact path="/">
               <Auth />
             </Route>
-            <DashboardRoutes exact path="/dashboard" component={Auth} />
+            <DashboardRoutes exact path="/match" component={MatchingJobs} />
           </Switch>
         </Router>
       </div>

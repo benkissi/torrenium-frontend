@@ -43,5 +43,18 @@ export const appReducer = (state, action) => {
                 user: action.payload.data,
                 loggedIn: action.payload.status
             }
+        case APP_TYPES.SET_MATCHING_JOBS:
+            return {
+                ...state,
+                matchingJobs: {
+                    bio: action.payload.bio,
+                    jobs: action.payload.jobs
+                }
+            }
+        case APP_TYPES.SET_LOADING_STATE: 
+            return {
+                ...state,
+                loading: action.payload
+            }
     }
 }

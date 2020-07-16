@@ -42,7 +42,7 @@ function Auth(props) {
 
   useEffect(() => {
     if(state.loggedIn){
-      history.push("/dashboard")
+      history.push("/match")
     }
   }, [state])
 
