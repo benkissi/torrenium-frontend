@@ -29,6 +29,8 @@ export const SideNav = styled.div`
 
 export const Content = styled.div`
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex: 1;
     box-sizing: border-box;
 `
