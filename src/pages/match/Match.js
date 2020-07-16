@@ -49,7 +49,7 @@ function MatchingJobs(props) {
         loadingMore: true
       };
     });
-    
+
     const newJobs = await loadMoreJobs(
       state.offset,
       10,
@@ -57,7 +57,7 @@ function MatchingJobs(props) {
       userStrengths,
       store.user.token
     );
-    if (newJobs) {
+    if (newJobs.results) {
       dispatchStore({ type: APP_TYPES.ADD_JOBS, payload: newJobs.results });
     }
 
@@ -126,6 +126,9 @@ function MatchingJobs(props) {
                         title={job.objective}
                         type={job.type}
                         key={index}
+                        remote={job.remote}
+                        status={job.status}
+                        match={job.match.status}
                       />
                     );
                   })
