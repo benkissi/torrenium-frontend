@@ -2,9 +2,8 @@ import React from "react";
 import { Wrapper, Head } from "./JobStyles";
 
 function Job(props) {
-  console.log("org", props.pic);
   return (
-    <Wrapper>
+    <Wrapper onClick={() => props.click(props.id, props.match)}>
       <div className="pic">
         <img src={props.pic} />
       </div>

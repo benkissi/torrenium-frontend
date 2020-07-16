@@ -67,3 +67,17 @@ export const loadMoreJobs = async(offset, size, aggregate, strengths, token) => 
 
     return data
 }
+
+export const getJobDetails = async(id, token) => {
+    const url = URLS.JOB_DETAILS
+
+    const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+        body: JSON.stringify({ id, token})
+    })
+
+    const data = res.json()
+
+    return data
+}

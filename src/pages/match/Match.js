@@ -5,8 +5,10 @@ import Button from "../../components/button";
 import Tag from "../../components/tag";
 import Job from "../../components/job";
 import ClipLoader from "react-spinners/ClipLoader";
+import Modal from "../../components/modal";
+import { ToastContainer, toast } from "react-toastify";
 
-import { findMatchingJobs, loadMoreJobs } from "../../utils/api";
+import { findMatchingJobs, loadMoreJobs, getJobDetails } from "../../utils/api";
 import { AppContext } from "../../store/store";
 
 import { APP_TYPES } from "../../store/types";
@@ -16,7 +18,8 @@ function MatchingJobs(props) {
   const [state, setState] = useState({
     username: "",
     loadingMore: false,
-    offset: 10
+    offset: 10,
+    currentJobDetails: null,
   });
 
   const handleInputChange = (event) => {
@@ -39,6 +42,15 @@ function MatchingJobs(props) {
       dispatchStore({ type: APP_TYPES.SET_LOADING_STATE, payload: false });
     } catch (error) {
       dispatchStore({ type: APP_TYPES.SET_LOADING_STATE, payload: false });
+      toast.error("username not found - please check and try again", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
@@ -46,31 +58,86 @@ function MatchingJobs(props) {
     setState((prevState) => {
       return {
         ...prevState,
-        loadingMore: true
+        loadingMore: true,
       };
     });
 
-    const newJobs = await loadMoreJobs(
-      state.offset,
-      10,
-      true,
-      userStrengths,
-      store.user.token
-    );
-    if (newJobs.results) {
-      dispatchStore({ type: APP_TYPES.ADD_JOBS, payload: newJobs.results });
+    try {
+      const newJobs = await loadMoreJobs(
+        state.offset,
+        10,
+        true,
+        userStrengths,
+        store.user.token
+      );
+      if (newJobs.results) {
+        dispatchStore({ type: APP_TYPES.ADD_JOBS, payload: newJobs.results });
+      }
+  
+      setState((prevState) => {
+        return {
+          ...prevState,
+          loadingMore: false,
+          offset: prevState.offset + 10,
+        };
+      });
+  
+      console.log("newJobs", newJobs);
+    } catch (error) {
+      setState((prevState) => {
+        return {
+          ...prevState,
+          loadingMore: false,
+        };
+      });
+  
+      toast.error("Something went wrong try again", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
+    
+  };
 
+  const handleJobClick = async (id, match) => {
+    try {
+      const jobDetails = await getJobDetails(id, store.user.token);
     setState((prevState) => {
       return {
         ...prevState,
-        loadingMore: false,
-        offset: prevState.offset + 10,
+        currentJobDetails: jobDetails,
+        jobMatch: match
       };
     });
-
-    console.log("newJobs", newJobs);
+    console.log("details", jobDetails);
+    } catch (error) {
+      toast.error("Could not load more. Try again", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
   };
+
+  const handleModalClose = () => {
+    console.log('close')
+    setState((prevState) => {
+      return {
+        ...prevState,
+        currentJobDetails: null,
+        jobMatch: false
+      };
+    });
+  }
 
   const profile = store.matchingJobs && store.matchingJobs.bio.person.picture;
   const userStrengths = store.matchingJobs && store.matchingJobs.bio.strengths;
@@ -122,6 +189,8 @@ function MatchingJobs(props) {
 
                     return (
                       <Job
+                        id={job.id}
+                        click={handleJobClick}
                         pic={picURL}
                         title={job.objective}
                         type={job.type}
@@ -146,8 +215,29 @@ function MatchingJobs(props) {
       ) : (
         <Empty>No Data Yet</Empty>
       )}
+      {state.currentJobDetails !== null ? (
+        <Modal
+          title={state.currentJobDetails.objective}
+          members={state.currentJobDetails.members}
+          details={state.currentJobDetails.details}
+          place={state.currentJobDetails.place}
+          type={state.currentJobDetails.agreement.type}
+          status={state.currentJobDetails.status}
+          match={state.jobMatch}
+          close={handleModalClose}
+        />
+      ) : (
+        ""
+      )}
     </Wrapper>
   );
 }
 
 export default MatchingJobs;
+
+// members={state.currentJobDetails.members}
+// details={state.currentJobDetails.details}
+// place={state.currentJobDetails.place}
+// type={state.currentJobDetails.agreement.type}
+// compensation={state.currentJobDetails.compensation.code}
+// status={state.currentJobDetails.status}

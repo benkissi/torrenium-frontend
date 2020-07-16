@@ -11,11 +11,11 @@ import {Wrapper, Top, Bottom, SideNav, Content} from './DashboardStyles'
 const DashbardLayout = props => {
     const { store } = useContext(AppContext);
     let history = useHistory();
-    useEffect(() => {
-        if(!store.loggedIn){
-            history.push("/")
-        }
-    }, [store])
+    // useEffect(() => {
+    //     if(!store.loggedIn){
+    //         history.push("/")
+    //     }
+    // }, [store])
     return (
         <Wrapper>
             <Top>
