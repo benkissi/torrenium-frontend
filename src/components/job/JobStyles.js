@@ -9,12 +9,14 @@ export const Wrapper = styled.div`
     justify-content: space-between;
     padding: 10px;
     margin: 10px;
+    cursor: pointer;
 
     .pic {
         display: flex;
         justify-content: center;
         align-items: center;
         width: 100px;
+        margin-right: 5px;
 
         img {
             width: 100%;
@@ -25,10 +27,16 @@ export const Wrapper = styled.div`
         flex: 1;
         display: flex;
         flex-direction: column;
+        margin-left: 5px;
+        color: white;
 
-        h4 {
-            color: white;
+        h4 p{
+            margin: 0;
+            margin-top: 10px;
+
         }
+
     }
+    
 `
 

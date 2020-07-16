@@ -28,7 +28,7 @@ export const Results = styled.div`
     display: flex;
     align-items: center;
     flex-direction: column;
-    width: 30%;
+    width: 40%;
 
     .profile-pic {
       width: 40%;
@@ -50,9 +50,21 @@ export const Results = styled.div`
 
   .table-container {
     display:flex;
-    flex-wrap: wrap;
-    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    width: 60%;
+    
+    .jobs {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .load-more {
+      width: 50%;
+      margin-top: 20px;
+    }
   }
+
+  
 `;
 
 export const Empty = styled.div`

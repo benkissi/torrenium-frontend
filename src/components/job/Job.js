@@ -10,6 +10,7 @@ function Job(props) {
       </div>
       <div className="details">
             <h4>{props.title}</h4>
+            <p>{props.type}</p>
       </div>
     </Wrapper>
   );
