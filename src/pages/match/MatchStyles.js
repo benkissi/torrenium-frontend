@@ -49,6 +49,8 @@ export const Results = styled.div`
   }
 
   .table-container {
+    display:flex;
+    flex-wrap: wrap;
     flex: 1;
   }
 `;

@@ -3,6 +3,7 @@ import { Wrapper, Results, Empty } from "./MatchStyles";
 import TextInput from "../../components/input";
 import Button from "../../components/button";
 import Tag from "../../components/tag";
+import Job from "../../components/job"
 import ClipLoader from "react-spinners/ClipLoader";
 
 import { findMatchingJobs } from "../../utils/api";
@@ -79,7 +80,25 @@ function MatchingJobs(props) {
                 : ""}
             </div>
           </div>
-          <div className="table-container"></div>
+          <div className="table-container">
+            {
+              store.matchingJobs? store.matchingJobs.jobs.results.map(job => {
+                let picURL
+                if(job.organizations && job.organizations.length > 0){
+                  picURL = job.organizations[0].picture
+                }else {
+                  picURL = ''
+                }
+                if(job.objective){
+                  return (
+                    <Job pic={picURL} title={job.objective}/>
+                  )
+                }
+                
+              }):""
+            }
+          <Job/>
+          </div>
         </Results>
       ) : <Empty>No Data Yet</Empty>}
     </Wrapper>
