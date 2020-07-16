@@ -7,6 +7,7 @@ import Job from "../../components/job";
 import ClipLoader from "react-spinners/ClipLoader";
 import Modal from "../../components/modal";
 import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { findMatchingJobs, loadMoreJobs, getJobDetails } from "../../utils/api";
 import { AppContext } from "../../store/store";
@@ -82,7 +83,6 @@ function MatchingJobs(props) {
         };
       });
   
-      console.log("newJobs", newJobs);
     } catch (error) {
       setState((prevState) => {
         return {
@@ -114,7 +114,6 @@ function MatchingJobs(props) {
         jobMatch: match
       };
     });
-    console.log("details", jobDetails);
     } catch (error) {
       toast.error("Could not load more. Try again", {
         position: "top-right",
@@ -129,7 +128,6 @@ function MatchingJobs(props) {
   };
 
   const handleModalClose = () => {
-    console.log('close')
     setState((prevState) => {
       return {
         ...prevState,
@@ -144,6 +142,7 @@ function MatchingJobs(props) {
 
   return (
     <Wrapper>
+      <ToastContainer />
       <h3>Find Opportunities that you match</h3>
       <div className="search-box">
         <TextInput

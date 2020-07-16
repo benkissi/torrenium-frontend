@@ -47,7 +47,6 @@ function Auth(props) {
   }, [state])
 
   const handleInputChange = (event) => {
-    console.log("event", event.target.name);
     const { name: key, value } = event.target;
     dispatch({
       type: FORM_TYPES.UPDATE_INPUTS,
@@ -153,7 +152,6 @@ function Auth(props) {
     if (state.type === "signin") {
       try {
         const user = await signinUser(state.email, state.password);
-        console.log("user", user);
         if (user) {
           dispatchStore({
             type: APP_TYPES.SET_LOGIN,
@@ -190,14 +188,12 @@ function Auth(props) {
       try {
         const user = await signupUser(state.email, state.password);
         if (user) {
-          console.log('user', user)
           dispatchStore({
             type: APP_TYPES.SET_LOGIN,
             payload: { status: true, data: user },
           });
         }
       } catch (error) {
-        console.log('eeror', error)
         toast.error("something went wrong, try again", {
           position: "top-right",
           autoClose: 5000,
